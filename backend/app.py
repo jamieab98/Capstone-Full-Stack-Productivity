@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_restful import Api, Resource
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from flask_migrate import Migrate
+from models import User, Workout, Exercise, ExerciseSet
 
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
 
-db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 api = Api(app)
