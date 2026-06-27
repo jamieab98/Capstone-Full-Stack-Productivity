@@ -20,7 +20,25 @@ class Home(Resource):
     def get(self):
         return{"message": "Backend is running"}
 
+class Users(Resource):
+    def get(self):
+        users = []
+        data = User.query.all()
+        for user in data:
+            users.append(user.name)
+        return{"message": users}
+
+class SingleUser(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        user_data = {
+            "name": user.name,
+        }
+        return(user_data)
+
 api.add_resource(Home, "/")
+api.add_resource(Users, "/users")
+api.add_resource(SingleUser, "/user/<int:id>")
 
 if __name__ == "__main__":
     app.run(debug=True)
