@@ -31,10 +31,14 @@ class Users(Resource):
 class SingleUser(Resource):
     def get(self, id):
         user = User.query.filter_by(id=id).first()
-        user_data = {
-            "name": user.name,
-        }
-        return(user_data)
+        user_workouts = []
+        for workout in user.workouts:
+            workout_data = {
+                "workout_id": workout.id,
+                "workout_type": workout.workout_type,
+            }
+            user_workouts.append(workout_data)
+        return{"user": user.name, "workouts": user_workouts}
 
 api.add_resource(Home, "/")
 api.add_resource(Users, "/users")
