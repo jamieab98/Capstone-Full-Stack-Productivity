@@ -69,11 +69,25 @@ class SingleWorkout(Resource):
         }
         return(workout_data)
 
+class Exercises(Resource):
+    def get(self):
+        exercises = []
+        data = Exercise.query.all()
+        for exercise in data:
+            exercise_data = {
+                "exercise_id": exercise.id,
+                "exercise_name": exercise.exercise_name,
+                "workout_id": exercise.workout_id
+            }
+            exercises.append(exercise_data)
+        return(exercises)
+
 api.add_resource(Home, "/")
 api.add_resource(Users, "/users")
 api.add_resource(SingleUser, "/user/<int:id>")
 api.add_resource(Workouts, "/workouts")
 api.add_resource(SingleWorkout, "/workout/<int:id>")
+api.add_resource(Exercises, "/exercises")
 
 if __name__ == "__main__":
     app.run(debug=True)
