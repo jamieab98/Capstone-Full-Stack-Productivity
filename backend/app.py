@@ -40,9 +40,23 @@ class SingleUser(Resource):
             user_workouts.append(workout_data)
         return{"user": user.name, "workouts": user_workouts}
 
+class Workouts(Resource):
+    def get(self):
+        workouts = []
+        data = Workout.query.all()
+        for workout in data:
+            workout_data = {
+                "workout_id": workout.id,
+                "workout_type": workout.workout_type,
+                "user_id": workout.user_id,
+            }
+            workouts.append(workout_data)
+        return(workouts)
+
 api.add_resource(Home, "/")
 api.add_resource(Users, "/users")
 api.add_resource(SingleUser, "/user/<int:id>")
+api.add_resource(Workouts, "/workouts")
 
 if __name__ == "__main__":
     app.run(debug=True)
