@@ -26,7 +26,7 @@ class Users(Resource):
         data = User.query.all()
         for user in data:
             users.append(user.name)
-        return{"message": users}
+        return(users)
 
 class SingleUser(Resource):
     def get(self, id):
@@ -38,7 +38,11 @@ class SingleUser(Resource):
                 "workout_type": workout.workout_type,
             }
             user_workouts.append(workout_data)
-        return{"user": user.name, "workouts": user_workouts}
+        user_workout_data = {
+            "user": user.name,
+            "workout": user_workouts
+        }
+        return(user_workout_data)
 
 class Workouts(Resource):
     def get(self):
