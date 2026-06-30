@@ -43,6 +43,7 @@ function App(){
         </form>
       </div>
 
+      <div>
       <h4>Create Workout</h4>
       <form onSubmit={handleCreateWorkout}>
         <label htmlFor="workouttype">Workout Type</label>
@@ -64,6 +65,7 @@ function App(){
 
         <button type="submit">Create Workout</button>
       </form>
+      </div>
       <div>
         <h4>Information Display</h4>
       </div>
