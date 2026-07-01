@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { data } from "react-router-dom"
 
 function App(){
   const [newUsername, setNewUsername] = useState("")
@@ -24,12 +25,12 @@ function App(){
 
   function handleCreateUser(e){
     e.preventDefault()
-    setUserClass(prev=>[...prev, {"Username": newUsername, "Displayname": displayName, "password": password}])
+    setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password}])
   }
 
   function handleCreateWorkout(e){
     e.preventDefault()
-    setWorkoutClass(prev=>[...prev, {"Workout Type": workoutType, "Date": workoutDate, "Username": username}])
+    setWorkoutClass(prev=>[...prev, {"workouttype": workoutType, "date": workoutDate, "username": username}])
   }
 
   function handleLogSet(){
@@ -49,7 +50,7 @@ function App(){
 
   function handleLogExercise(e){
     e.preventDefault()
-    setExerciseClass(prev=>[...prev, {"Exercise Name": exerciseName, "Sets": exerciseSets}])
+    setExerciseClass(prev=>[...prev, {"exercisename": exerciseName, "sets": exerciseSets}])
     setExerciseName("")
     setSetNumber(1)
     setExerciseSets([])
@@ -132,7 +133,35 @@ function App(){
       </div>
 
       <div>
+        Users:
+        {userClass.map((data, index)=>(
+          <div key={index}>
+            Username: {data.username}
+          </div>
+        ))}
+      </div>
 
+      <div>
+        Workouts:
+        {workoutClass.map((data, index)=>(
+          <div key={index}>
+            Workout Type: {data.workouttype}
+            Date: {data.date}
+            Username: {data.username}
+          </div>
+        ))}
+      </div>
+
+      <div>
+        Exercises:
+        {exerciseClass.map((data, index)=>(
+          <div key={index}>
+            Exercise Name: {data.exercisename}
+            {data.sets.map((set, index)=>(
+              <p key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps</p>
+            ))}
+          </div>
+        ))}
       </div>
     </>
   )
