@@ -6,13 +6,16 @@ function App(){
   const [displayName, setDisplayName] = useState("")
   const [password, setPassword] = useState("")
   const [userClass, setUserClass] = useState([])
+  const [userID, setUserID] = useState(1)
   
-  const [workoutType, setWorkoutType] = useState("")
+  const [workoutType, setWorkoutType] = useState("leg")
   const [workoutDate, setWorkoutDate] = useState("")
-  const [username, setUsername] = useState("")
+  const [workoutUserID, setWorkoutUserID] = useState(0)
   const [workoutClass, setWorkoutClass] = useState([])
+  const [workoutID, setWorkoutID] = useState(1)
 
   const [exerciseName, setExerciseName] = useState("")
+  const [exerciseID, setExerciseID] = useState(1)
 
   const [weight, setWeight] = useState(0)
   const [time, setTime] = useState(0)
@@ -21,17 +24,20 @@ function App(){
   const [setNumber, setSetNumber] = useState(1)
   const [setID, setSetID] = useState(1)
 
+
   const [exerciseSets, setExerciseSets] = useState([])
   const [exerciseClass, setExerciseClass] = useState([])
 
   function handleCreateUser(e){
     e.preventDefault()
-    setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password}])
+    setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password, "userid": userID}])
+    setUserID(userID + 1)
   }
 
   function handleCreateWorkout(e){
     e.preventDefault()
-    setWorkoutClass(prev=>[...prev, {"workouttype": workoutType, "date": workoutDate, "username": username}])
+    setWorkoutClass(prev=>[...prev, {"workouttype": workoutType, "date": workoutDate, "workoutuserid": workoutUserID, "workoutid": workoutID}])
+    setWorkoutID(workoutID + 1)
   }
 
   function handleLogSet(){
@@ -53,10 +59,11 @@ function App(){
 
   function handleLogExercise(e){
     e.preventDefault()
-    setExerciseClass(prev=>[...prev, {"exercisename": exerciseName, "sets": exerciseSets}])
+    setExerciseClass(prev=>[...prev, {"exercisename": exerciseName, "exerciseid": exerciseID, "sets": exerciseSets}])
     setExerciseName("")
     setSetNumber(1)
     setExerciseSets([])
+    setExerciseID(exerciseID + 1)
   }
 
   return(
@@ -96,8 +103,8 @@ function App(){
           <label htmlFor="date">Date: </label>
           <input type="date" id="date" value={workoutDate} onChange={(e)=>setWorkoutDate(e.target.value)}/>
 
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
+          <label htmlFor="workoutuserid">UserId: </label>
+          <input type="number" id="workoutuserid" value={workoutUserID} onChange={(e)=>setWorkoutUserID(e.target.value)}/>
 
           <button type="submit">Create Workout</button>
         </form>
@@ -139,30 +146,38 @@ function App(){
         Users:
         {userClass.map((data, index)=>(
           <div key={index}>
-            Username: {data.username}
+            <br/>
+            Username: {data.username}<br/>
+            Display: {data.displayname}<br/>
+            User ID: {data.userid}
           </div>
         ))}
+        <br/>
       </div>
 
       <div>
         Workouts:
         {workoutClass.map((data, index)=>(
           <div key={index}>
-            Workout Type: {data.workouttype}
-            Date: {data.date}
-            Username: {data.username}
+            Workout Type: {data.workouttype}<br/>
+            Date: {data.date}<br/>
+            Workout ID: {data.workoutid}<br/>
+            User ID: {data.workoutuserid}<br/>
           </div>
         ))}
       </div>
 
       <div>
+        <br/>
         Exercises:
         {exerciseClass.map((data, index)=>(
           <div key={index}>
-            Exercise Name: {data.exercisename}
+            Exercise Name: {data.exercisename}<br/>
+            Exercise ID: {data.exerciseid}
             {data.sets.map((set, index)=>(
-              <p key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. ID: {set.setid}</p>
+              <div key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. Set ID: {set.setid}</div>
             ))}
+            <br/>
           </div>
         ))}
       </div>
