@@ -19,6 +19,7 @@ function App(){
   const [unit, setUnit] = useState("lbs")
   const [reps, setReps] = useState(0)
   const [setNumber, setSetNumber] = useState(1)
+  const [setID, setSetID] = useState(1)
 
   const [exerciseSets, setExerciseSets] = useState([])
   const [exerciseClass, setExerciseClass] = useState([])
@@ -39,9 +40,11 @@ function App(){
       "time": time,
       "unit": unit,
       "reps": reps,
-      "set number": setNumber
+      "setnumber": setNumber,
+      "setid": setID
     }])
     setSetNumber(setNumber + 1)
+    setSetID(setID + 1)
     setWeight(0)
     setTime(0)
     setUnit("lbs")
@@ -158,7 +161,7 @@ function App(){
           <div key={index}>
             Exercise Name: {data.exercisename}
             {data.sets.map((set, index)=>(
-              <p key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps</p>
+              <p key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. ID: {set.setid}</p>
             ))}
           </div>
         ))}
