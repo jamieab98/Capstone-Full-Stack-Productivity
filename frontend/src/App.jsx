@@ -9,6 +9,14 @@ function App(){
   const [workoutDate, setWorkoutDate] = useState("")
   const [username, setUsername] = useState("")
 
+  const [exerciseName, setExerciseName] = useState("")
+
+  const [weight, setWeight] = useState(0)
+  const [time, setTime] = useState(0)
+  const [unit, setUnit] = useState("")
+  const [reps, setReps] = useState(0)
+  const [setNumber, setSetNumber] = useState(1)
+
   function handleCreateUser(e){
     e.preventDefault()
     console.log(newUsername)
@@ -21,6 +29,22 @@ function App(){
     console.log(workoutType)
     console.log(workoutDate)
     console.log(username)
+  }
+
+  function handleLogSet(){
+    console.log({
+      "exercise name": exerciseName,
+      "weight": weight,
+      "time": time,
+      "unit": unit,
+      "reps": reps,
+      "set number": setNumber
+    })
+    setSetNumber(setNumber + 1)
+    setWeight(0)
+    setTime(0)
+    setUnit("")
+    setReps(0)
   }
 
   return(
@@ -58,10 +82,10 @@ function App(){
           </select>
 
           <label htmlFor="date">Date: </label>
-          <input type="date" id="date" value={workoutDate} onChange={(e)=>setWorkoutDate(e.target.value)}></input>
+          <input type="date" id="date" value={workoutDate} onChange={(e)=>setWorkoutDate(e.target.value)}/>
 
           <label htmlFor="username">Username</label>
-          <input type="text" id="username" value={username} onChange={(e)=>setUsername(e.target.value)}></input>
+          <input type="text" id="username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
 
           <button type="submit">Create Workout</button>
         </form>
@@ -69,6 +93,32 @@ function App(){
 
       <div>
         <h4>Create Exercise</h4>
+        <form>
+          <label htmlFor="exercisename">Exercise Name</label>
+          <input type="text" id="exercisename" value={exerciseName} onChange={(e)=>setExerciseName(e.target.value)}/>
+          <br/>
+          <br/>
+          Set
+          <br/>
+          <label htmlFor="weight">Weight</label>
+          <input type="number" id="weight" value={weight} onChange={(e)=>setWeight(e.target.value)}/>
+
+          <label htmlFor="time">Time</label>
+          <input type="number" id="time" value={time} onChange={(e)=>setTime(e.target.value)}/>
+
+          <label htmlFor="unit">Unit</label>
+          <select id="unit" value={unit} onChange={(e)=>setUnit(e.target.value)}>
+            <option value="lbs">lbs</option>
+            <option value="kgs">kgs</option>
+            <option value="secs">secs</option>
+            <option value="mins">mins</option>
+          </select>
+
+          <label htmlFor="reps">Reps</label>
+          <input type="number" id="reps" value={reps} onChange={(e)=>setReps(e.target.value)}/>
+
+          <button type="button" onClick={handleLogSet}>Log Set</button>
+        </form>
       </div>
       <div>
         <h4>Information Display</h4>
