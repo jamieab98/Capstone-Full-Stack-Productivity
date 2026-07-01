@@ -13,9 +13,11 @@ function App(){
 
   const [weight, setWeight] = useState(0)
   const [time, setTime] = useState(0)
-  const [unit, setUnit] = useState("")
+  const [unit, setUnit] = useState("lbs")
   const [reps, setReps] = useState(0)
   const [setNumber, setSetNumber] = useState(1)
+
+  const [exerciseSets, setExerciseSets] = useState([])
 
   function handleCreateUser(e){
     e.preventDefault()
@@ -32,19 +34,29 @@ function App(){
   }
 
   function handleLogSet(){
-    console.log({
-      "exercise name": exerciseName,
+    setExerciseSets(prev=>[...prev, {
       "weight": weight,
       "time": time,
       "unit": unit,
       "reps": reps,
       "set number": setNumber
-    })
+    }])
     setSetNumber(setNumber + 1)
     setWeight(0)
     setTime(0)
-    setUnit("")
+    setUnit("lbs")
     setReps(0)
+  }
+
+  function handleLogExercise(e){
+    e.preventDefault()
+    console.log({
+      "exercise name": exerciseName,
+      "sets": exerciseSets
+    })
+    setExerciseName("")
+    setSetNumber(1)
+    setExerciseSets([])
   }
 
   return(
@@ -118,6 +130,8 @@ function App(){
           <input type="number" id="reps" value={reps} onChange={(e)=>setReps(e.target.value)}/>
 
           <button type="button" onClick={handleLogSet}>Log Set</button>
+
+          <button type="submit" onClick={handleLogExercise}>Log Exercise</button>
         </form>
       </div>
       <div>
