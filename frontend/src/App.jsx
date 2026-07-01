@@ -1,14 +1,15 @@
 import { useState } from "react"
-import UserDisplay from "./UserDisplay"
 
 function App(){
   const [newUsername, setNewUsername] = useState("")
   const [displayName, setDisplayName] = useState("")
   const [password, setPassword] = useState("")
+  const [userClass, setUserClass] = useState([])
   
   const [workoutType, setWorkoutType] = useState("")
   const [workoutDate, setWorkoutDate] = useState("")
   const [username, setUsername] = useState("")
+  const [workoutClass, setWorkoutClass] = useState([])
 
   const [exerciseName, setExerciseName] = useState("")
 
@@ -19,32 +20,16 @@ function App(){
   const [setNumber, setSetNumber] = useState(1)
 
   const [exerciseSets, setExerciseSets] = useState([])
-
-  const [userClass, setUserClass] = useState([
-    {
-      "username": "jamieab98",
-      "displayname": "Jamie",
-      "workouts": []
-    },
-    {
-      "username": "bobbyg66",
-      "displayname": "Bob",
-      "workouts": []
-    }
-  ])
+  const [exerciseClass, setExerciseClass] = useState([])
 
   function handleCreateUser(e){
     e.preventDefault()
-    console.log(newUsername)
-    console.log(displayName)
-    console.log(password)
+    setUserClass(prev=>[...prev, {"Username": newUsername, "Displayname": displayName, "password": password}])
   }
 
   function handleCreateWorkout(e){
     e.preventDefault()
-    console.log(workoutType)
-    console.log(workoutDate)
-    console.log(username)
+    setWorkoutClass(prev=>[...prev, {"Workout Type": workoutType, "Date": workoutDate, "Username": username}])
   }
 
   function handleLogSet(){
@@ -64,10 +49,7 @@ function App(){
 
   function handleLogExercise(e){
     e.preventDefault()
-    console.log({
-      "exercise name": exerciseName,
-      "sets": exerciseSets
-    })
+    setExerciseClass(prev=>[...prev, {"Exercise Name": exerciseName, "Sets": exerciseSets}])
     setExerciseName("")
     setSetNumber(1)
     setExerciseSets([])
@@ -150,9 +132,7 @@ function App(){
       </div>
 
       <div>
-        {userClass.map((item, index)=>(
-          <UserDisplay key={index} index={index} data={item}/>
-        ))}
+
       </div>
     </>
   )
