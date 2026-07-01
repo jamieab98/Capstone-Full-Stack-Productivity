@@ -1,4 +1,5 @@
 import { useState } from "react"
+import UserDisplay from "./UserDisplay"
 
 function App(){
   const [newUsername, setNewUsername] = useState("")
@@ -18,6 +19,19 @@ function App(){
   const [setNumber, setSetNumber] = useState(1)
 
   const [exerciseSets, setExerciseSets] = useState([])
+
+  const [userClass, setUserClass] = useState([
+    {
+      "username": "jamieab98",
+      "displayname": "Jamie",
+      "workouts": []
+    },
+    {
+      "username": "bobbyg66",
+      "displayname": "Bob",
+      "workouts": []
+    }
+  ])
 
   function handleCreateUser(e){
     e.preventDefault()
@@ -134,8 +148,11 @@ function App(){
           <button type="submit" onClick={handleLogExercise}>Log Exercise</button>
         </form>
       </div>
+
       <div>
-        <h4>Information Display</h4>
+        {userClass.map((item, index)=>(
+          <UserDisplay key={index} index={index} data={item}/>
+        ))}
       </div>
     </>
   )
