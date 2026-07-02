@@ -23,11 +23,12 @@ class Home(Resource):
 
 class Users(Resource):
     def get(self):
-        users = []
-        data = User.query.all()
-        for user in data:
-            users.append(user.name)
-        return(users)
+        allUsers = []
+        users = User.query.all()
+        for u in users:
+            user = {'id': u.id, 'username': u.username, 'displayname': u.display_name}
+            allUsers.append(user)
+        return(allUsers), 200
 
 class SingleUser(Resource):
     def get(self, id):

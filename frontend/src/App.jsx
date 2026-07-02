@@ -28,6 +28,8 @@ function App(){
   const [exerciseSets, setExerciseSets] = useState([])
   const [exerciseClass, setExerciseClass] = useState([])
 
+  const [users, setUsers] = useState([])
+
   function handleCreateUser(e){
     e.preventDefault()
     setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password, "userid": userID}])
@@ -201,15 +203,7 @@ function App(){
       <div>
         <br/>
         Users:
-        {userClass.map((data, index)=>(
-          <div key={index}>
-            Username: {data.username}<br/>
-            Display: {data.displayname}<br/>
-            User ID: {data.userid}<br/>
-            <button type="button" onClick={()=>handleDeleteUser(data.userid)}>Delete User</button>
-            <button type="button" onClick={()=>handleUpdateUser(data.userid)}>Update User</button>
-          </div>
-        ))}
+
         <br/>
       </div>
 
