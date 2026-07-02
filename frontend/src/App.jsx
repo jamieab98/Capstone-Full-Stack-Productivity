@@ -82,6 +82,11 @@ function App(){
     setWorkoutClass(prev=>prev.filter(w=>w!=workout))
   }
 
+  function handleDeleteExercise(id){
+    const exercise = exerciseClass.find(e=>e.exerciseid==id)
+    setExerciseClass(prev=>prev.filter(e=>e!=exercise))
+  }
+
   return(
     <>
       <h1>My App</h1>
@@ -198,7 +203,8 @@ function App(){
             Workout ID: {data.workoutid}
             {data.sets.map((set, index)=>(
               <div key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. Set ID: {set.setid}</div>
-            ))}
+            ))}<br/>
+            <button type="button" onClick={()=>handleDeleteExercise(data.exerciseid)}>Delete Exercise</button>
             <br/>
           </div>
         ))}
