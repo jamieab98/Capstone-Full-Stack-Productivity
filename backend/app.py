@@ -32,19 +32,9 @@ class Users(Resource):
 
 class SingleUser(Resource):
     def get(self, id):
-        user = User.query.filter_by(id=id).first()
-        user_workouts = []
-        for workout in user.workouts:
-            workout_data = {
-                "workout_id": workout.id,
-                "workout_type": workout.workout_type,
-            }
-            user_workouts.append(workout_data)
-        user_workout_data = {
-            "user": user.name,
-            "workout": user_workouts
-        }
-        return(user_workout_data)
+        u = User.query.filter_by(id=id).first()
+        user_data = {'id': u.id, 'username': u.username, 'displayname': u.display_name}
+        return(user_data), 200
 
 class Workouts(Resource):
     def get(self):
