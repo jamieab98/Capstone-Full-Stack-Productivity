@@ -33,6 +33,9 @@ function App(){
     e.preventDefault()
     setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password, "userid": userID}])
     setUserID(userID + 1)
+    setNewUsername("")
+    setDisplayName("")
+    setPassword("")
   }
 
   function handleCreateWorkout(e){
@@ -66,6 +69,12 @@ function App(){
     setExerciseSets([])
     setExerciseID(exerciseID + 1)
     setExerciseWorkoutID(0)
+  }
+
+  function handleDeleteUser(id){
+    const user = userClass.find(u=>u.userid==id)
+    console.log(`Deleting ${user.displayname} from the database`)
+    setUserClass(prev=>prev.filter(u=>u!=user))
   }
 
   return(
@@ -154,7 +163,8 @@ function App(){
             <br/>
             Username: {data.username}<br/>
             Display: {data.displayname}<br/>
-            User ID: {data.userid}
+            User ID: {data.userid}<br/>
+            <button type="button" onClick={()=>handleDeleteUser(data.userid)}>Delete User</button>
           </div>
         ))}
         <br/>
