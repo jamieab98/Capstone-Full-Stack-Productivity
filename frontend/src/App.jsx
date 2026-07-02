@@ -8,7 +8,7 @@ function App(){
   const [userClass, setUserClass] = useState([])
   const [userID, setUserID] = useState(1)
   
-  const [workoutType, setWorkoutType] = useState("leg")
+  const [workoutType, setWorkoutType] = useState("Leg")
   const [workoutDate, setWorkoutDate] = useState("")
   const [workoutUserID, setWorkoutUserID] = useState(0)
   const [workoutClass, setWorkoutClass] = useState([])
@@ -77,6 +77,11 @@ function App(){
     setUserClass(prev=>prev.filter(u=>u!=user))
   }
 
+  function handleDeleteWorkout(id){
+    const workout = workoutClass.find(w=>w.workoutid==id)
+    setWorkoutClass(prev=>prev.filter(w=>w!=workout))
+  }
+
   return(
     <>
       <h1>My App</h1>
@@ -102,13 +107,12 @@ function App(){
         <form onSubmit={handleCreateWorkout}>
           <label htmlFor="workouttype">Workout Type</label>
           <select value={workoutType} onChange={(e)=>setWorkoutType(e.target.value)} id="workouttype">
-            <option value="leg">Leg</option>
-            <option value="push">Push</option>
-            <option value="pull">Pull</option>
-            <option value="upper">Upper</option>
-            <option value="lower">Lower</option>
-            <option value="full">Full Body</option>
-            <option value="other">Other</option>
+            <option value="Leg">Leg</option>
+            <option value="Push">Push</option>
+            <option value="Pull">Pull</option>
+            <option value="Upper">Upper</option>
+            <option value="Full">Full Body</option>
+            <option value="Other">Other</option>
           </select>
 
           <label htmlFor="date">Date: </label>
@@ -178,6 +182,7 @@ function App(){
             Date: {data.date}<br/>
             Workout ID: {data.workoutid}<br/>
             User ID: {data.workoutuserid}<br/>
+            <button type="button" onClick={()=>handleDeleteWorkout(data.workoutid)}>Delete Workout</button>
             <br/>
           </div>
         ))}
