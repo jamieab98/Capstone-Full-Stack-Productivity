@@ -47,18 +47,8 @@ class Workouts(Resource):
 
 class SingleWorkout(Resource):
     def get(self, id):
-        workout = Workout.query.filter_by(id=id).first()
-        exercises = []
-        for exercise in workout.exercises:
-            exercises.append({
-                "exercise_name": exercise.exercise_name,
-                "exercise_id": exercise.id
-            })
-        workout_data = {
-            "workout_type": workout.workout_type,
-            "date": workout.date.isoformat(),
-            "exercises": exercises
-        }
+        w = Workout.query.filter_by(id=id).first()
+        workout_data = {'id': w.id, 'workouttype': w.workout_type, 'date': w.date.isoformat(), 'userid': w.user_id}
         return(workout_data)
 
 class Exercises(Resource):
