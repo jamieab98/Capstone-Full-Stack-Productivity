@@ -56,8 +56,11 @@ class Exercises(Resource):
         allExercises = []
         exercises = Exercise.query.all()
         for e in exercises:
-
-            exercise = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id}
+            sets = []
+            for s in e.exercise_sets:
+                set = {'id': s.id, 'reps': s.reps, 'weight': s.weight, 'time': s.time, 'unit': s.unit}
+                sets.append(set)
+            exercise = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id, 'sets': sets}
             allExercises.append(exercise)
         return(allExercises)
 
