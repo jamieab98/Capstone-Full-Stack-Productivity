@@ -25,7 +25,6 @@ function App(){
   const [setNumber, setSetNumber] = useState(1)
   const [setID, setSetID] = useState(1)
 
-
   const [exerciseSets, setExerciseSets] = useState([])
   const [exerciseClass, setExerciseClass] = useState([])
 
@@ -89,6 +88,22 @@ function App(){
     setExerciseClass(prev=>prev.filter(e=>e!=exercise))
   }
 
+  function handleUpdateUser(id){
+    const user = userClass.find(u=>u.userid==id)
+    setNewUsername(user.username)
+    setDisplayName(user.displayname)
+    setPassword(user.password)
+    setUserID(user.userid)
+  }
+
+  function handleFinalizeUpdateUser(){
+    setUserClass(prev=>prev.map(u=>u.userid==userID?{"username": newUsername, "displayname": displayName, "password": password, "userid": userID}:u))
+    setNewUsername("")
+    setDisplayName("")
+    setPassword("")
+    setUserID(userClass[userClass.length-1].userid + 1)
+  }
+
   function handleUpdateWorkout(id){
     const workout = workoutClass.find(w=>w.workoutid==id)
     setWorkoutType(workout.workouttype)
@@ -121,6 +136,7 @@ function App(){
           <input type="password" value={password} id="password" onChange={(e)=>setPassword(e.target.value)}/>
 
           <button type="submit">Create User</button>
+          <button type="button" onClick={handleFinalizeUpdateUser}>Update User</button>
         </form>
       </div>
 
@@ -192,6 +208,7 @@ function App(){
             Display: {data.displayname}<br/>
             User ID: {data.userid}<br/>
             <button type="button" onClick={()=>handleDeleteUser(data.userid)}>Delete User</button>
+            <button type="button" onClick={()=>handleUpdateUser(data.userid)}>Update User</button>
           </div>
         ))}
         <br/>
