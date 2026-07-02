@@ -9,7 +9,7 @@ with app.app_context():
     Exercise.query.delete()
     ExerciseSet.query.delete()
 
-    u1 = User(name="Jamie")
+    u1 = User(username="jamieab98", display_name="Jamie", password="123")
 
     w1 = Workout(workout_type="Leg Day", date=date(2026,6,20), user_id=1)
 
