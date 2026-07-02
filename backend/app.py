@@ -11,7 +11,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 cors(app)
 
-from models import User, Workout, Exercise, ExerciseSet
+from models import User, Workout, Exercise
 
 migrate = Migrate(app, db)
 
