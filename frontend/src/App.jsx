@@ -16,6 +16,7 @@ function App(){
 
   const [exerciseName, setExerciseName] = useState("")
   const [exerciseID, setExerciseID] = useState(1)
+  const [exerciseWorkoutID, setExerciseWorkoutID] = useState(1)
 
   const [weight, setWeight] = useState(0)
   const [time, setTime] = useState(0)
@@ -59,11 +60,12 @@ function App(){
 
   function handleLogExercise(e){
     e.preventDefault()
-    setExerciseClass(prev=>[...prev, {"exercisename": exerciseName, "exerciseid": exerciseID, "sets": exerciseSets}])
+    setExerciseClass(prev=>[...prev, {"exercisename": exerciseName, "exerciseid": exerciseID, "sets": exerciseSets, "workoutid": exerciseWorkoutID}])
     setExerciseName("")
     setSetNumber(1)
     setExerciseSets([])
     setExerciseID(exerciseID + 1)
+    setExerciseWorkoutID(0)
   }
 
   return(
@@ -115,6 +117,9 @@ function App(){
         <form>
           <label htmlFor="exercisename">Exercise Name</label>
           <input type="text" id="exercisename" value={exerciseName} onChange={(e)=>setExerciseName(e.target.value)}/>
+
+          <label htmlFor="workoutid">Workout ID</label>
+          <input type="number" id="workoutid" value={exerciseWorkoutID} onChange={(e)=>setExerciseWorkoutID(e.target.value)}/>          
           <br/>
           <br/>
           Set
@@ -163,6 +168,7 @@ function App(){
             Date: {data.date}<br/>
             Workout ID: {data.workoutid}<br/>
             User ID: {data.workoutuserid}<br/>
+            <br/>
           </div>
         ))}
       </div>
@@ -173,7 +179,8 @@ function App(){
         {exerciseClass.map((data, index)=>(
           <div key={index}>
             Exercise Name: {data.exercisename}<br/>
-            Exercise ID: {data.exerciseid}
+            Exercise ID: {data.exerciseid}<br/>
+            Workout ID: {data.workoutid}
             {data.sets.map((set, index)=>(
               <div key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. Set ID: {set.setid}</div>
             ))}
