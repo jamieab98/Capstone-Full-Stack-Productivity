@@ -56,31 +56,19 @@ class Exercises(Resource):
         allExercises = []
         exercises = Exercise.query.all()
         for e in exercises:
+
             exercise = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id}
             allExercises.append(exercise)
         return(allExercises)
 
 class SingleExercise(Resource):
     def get(self, id):
-        exercise = Exercise.query.filter_by(id=id).first()
-        sets_data = []
-        sets = exercise.exercise_sets
-        for set in sets:
-            set_data = {
-                "reps": set.reps,
-                "weight": set.weight,
-                "time": set.time,
-                "unit": set.unit,
-                "set_id": set.id,
-                "exercise_id": set.exercise_id
-            }
-            sets_data.append(set_data)
-        exercise_data = {
-            "exercise_name": exercise.exercise_name,
-            "exercise_id": exercise.id,
-            "workout_id": exercise.workout_id,
-            "sets": sets_data
-        }
+        e = Exercise.query.filter_by(id=id).first()
+        sets = []
+        for s in e.exercise_sets:
+            set = {'id': s.id, 'reps': s.reps, 'weight': s.weight, 'time': s.time, 'unit': s.unit}
+            sets.append(set)
+        exercise_data = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id, 'sets': sets}
         return(exercise_data)
 
 api.add_resource(Home, "/")
