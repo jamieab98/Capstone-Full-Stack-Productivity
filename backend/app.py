@@ -38,16 +38,12 @@ class SingleUser(Resource):
 
 class Workouts(Resource):
     def get(self):
-        workouts = []
-        data = Workout.query.all()
-        for workout in data:
-            workout_data = {
-                "workout_id": workout.id,
-                "workout_type": workout.workout_type,
-                "user_id": workout.user_id,
-            }
-            workouts.append(workout_data)
-        return(workouts)
+        allWorkouts = []
+        workouts = Workout.query.all()
+        for w in workouts:
+            workout = {'id': w.id, 'workouttype': w.workout_type, 'date': w.date.isoformat(), 'userid': w.user_id}
+            allWorkouts.append(workout)
+        return(allWorkouts), 200
 
 class SingleWorkout(Resource):
     def get(self, id):
