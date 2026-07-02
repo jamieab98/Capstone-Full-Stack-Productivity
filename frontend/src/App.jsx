@@ -41,6 +41,8 @@ function App(){
   function handleCreateWorkout(e){
     e.preventDefault()
     setWorkoutClass(prev=>[...prev, {"workouttype": workoutType, "date": workoutDate, "workoutuserid": workoutUserID, "workoutid": workoutID}])
+    setWorkoutDate("")
+    setWorkoutUserID(0)
     setWorkoutID(workoutID + 1)
   }
 
@@ -87,6 +89,21 @@ function App(){
     setExerciseClass(prev=>prev.filter(e=>e!=exercise))
   }
 
+  function handleUpdateWorkout(id){
+    const workout = workoutClass.find(w=>w.workoutid==id)
+    setWorkoutType(workout.workouttype)
+    setWorkoutDate(workout.date)
+    setWorkoutUserID(workout.workoutuserid)
+    setWorkoutID(workout.workoutid)
+  }
+
+  function handleFinalizeUpdateWorkout(){
+    setWorkoutClass(prev=>prev.map(w=>w.workoutid==workoutID?{"workouttype": workoutType, "date": workoutDate, "workoutuserid": workoutUserID, "workoutid": workoutID}:w))
+    setWorkoutType("Leg")
+    setWorkoutDate("")
+    setWorkoutUserID(0)
+  }
+
   return(
     <>
       <h1>My App</h1>
@@ -127,6 +144,7 @@ function App(){
           <input type="number" id="workoutuserid" value={workoutUserID} onChange={(e)=>setWorkoutUserID(e.target.value)}/>
 
           <button type="submit">Create Workout</button>
+          <button type="button" onClick={handleFinalizeUpdateWorkout}>Update Workout</button>
         </form>
       </div>
 
@@ -166,10 +184,10 @@ function App(){
       </div>
 
       <div>
+        <br/>
         Users:
         {userClass.map((data, index)=>(
           <div key={index}>
-            <br/>
             Username: {data.username}<br/>
             Display: {data.displayname}<br/>
             User ID: {data.userid}<br/>
@@ -188,7 +206,8 @@ function App(){
             Workout ID: {data.workoutid}<br/>
             User ID: {data.workoutuserid}<br/>
             <button type="button" onClick={()=>handleDeleteWorkout(data.workoutid)}>Delete Workout</button>
-            <br/>
+            <button type="button" onClick={()=>handleUpdateWorkout(data.workoutid)}>UpdateWorkout</button>
+            <br/><br/>
           </div>
         ))}
       </div>
