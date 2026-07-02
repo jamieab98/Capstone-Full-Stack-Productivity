@@ -74,7 +74,6 @@ function App(){
 
   function handleDeleteUser(id){
     const user = userClass.find(u=>u.userid==id)
-    console.log(`Deleting ${user.displayname} from the database`)
     setUserClass(prev=>prev.filter(u=>u!=user))
   }
 
