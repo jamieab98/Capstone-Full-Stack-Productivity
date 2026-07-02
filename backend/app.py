@@ -53,16 +53,12 @@ class SingleWorkout(Resource):
 
 class Exercises(Resource):
     def get(self):
-        exercises = []
-        data = Exercise.query.all()
-        for exercise in data:
-            exercise_data = {
-                "exercise_id": exercise.id,
-                "exercise_name": exercise.exercise_name,
-                "workout_id": exercise.workout_id
-            }
-            exercises.append(exercise_data)
-        return(exercises)
+        allExercises = []
+        exercises = Exercise.query.all()
+        for e in exercises:
+            exercise = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id}
+            allExercises.append(exercise)
+        return(allExercises)
 
 class SingleExercise(Resource):
     def get(self, id):
