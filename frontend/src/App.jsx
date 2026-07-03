@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { data } from "react-router-dom"
 
 function App(){
@@ -29,6 +29,29 @@ function App(){
   const [exerciseClass, setExerciseClass] = useState([])
 
   const [users, setUsers] = useState([])
+  const [workouts, setWorkouts] = useState([])
+  const [exercises, setExercises] = useState([])
+
+  function getUsers(){
+    fetch("http://127.0.0.1:5000/users")
+    .then(response => response.json())
+    .then(data => setUsers(data))
+  }
+
+  function getWorkouts(){
+    fetch("http://127.0.0.1:5000/workouts")
+    .then(response => response.json())
+    .then(data => setWorkouts(data))
+  }
+
+  function getExercises(){
+    fetch("http://127.0.0.1:5000/exercises")
+    .then(response => response.json())
+    .then(data => {
+      setExercises(data)
+      console.log(data)
+    })
+  }
 
   function handleCreateUser(e){
     e.preventDefault()
@@ -202,39 +225,48 @@ function App(){
 
       <div>
         <br/>
+        <button type="button" onClick={getUsers}>Get Users</button>
+        <br/>
         Users:
-
+        {users.map((u, index)=>(
+          <div key={index}>
+            Username: {u.username}<br/>
+            Displayname: {u.displayname}<br/>
+            User ID: {u.id}<br/>
+          </div>
+        ))}
         <br/>
       </div>
 
       <div>
+        <button type="button" onClick={getWorkouts}>Get Workouts</button>
+        <br/>
         Workouts:
-        {workoutClass.map((data, index)=>(
+        {workouts.map((w, index)=>(
           <div key={index}>
-            Workout Type: {data.workouttype}<br/>
-            Date: {data.date}<br/>
-            Workout ID: {data.workoutid}<br/>
-            User ID: {data.workoutuserid}<br/>
-            <button type="button" onClick={()=>handleDeleteWorkout(data.workoutid)}>Delete Workout</button>
-            <button type="button" onClick={()=>handleUpdateWorkout(data.workoutid)}>UpdateWorkout</button>
-            <br/><br/>
+            Workout Type: {w.workouttype}<br/>
+            Date: {w.date}<br/>
+            Workout ID: {w.id}<br/><br/>
           </div>
         ))}
       </div>
 
       <div>
+        <button type="button" onClick={getExercises}>Get Exercises</button>
         <br/>
         Exercises:
-        {exerciseClass.map((data, index)=>(
+        {exercises.map((e, index)=>(
           <div key={index}>
-            Exercise Name: {data.exercisename}<br/>
-            Exercise ID: {data.exerciseid}<br/>
-            Workout ID: {data.workoutid}
-            {data.sets.map((set, index)=>(
-              <div key={index}>Set {index + 1}: {set.weight}{set.unit}: {set.reps} reps. Set ID: {set.setid}</div>
-            ))}<br/>
-            <button type="button" onClick={()=>handleDeleteExercise(data.exerciseid)}>Delete Exercise</button>
-            <br/>
+            Exercise Name: {e.exercisename}<br/>
+            Sets: {e.sets.map((s, i)=>(
+              <div key={i}>
+                Set {i+1}<br/>
+                Reps: {s.reps}<br/>
+                Weight: {s.weight}<br/>
+                Time: {s.time}<br/>
+                Unit: {s.unit}<br/><br/>
+              </div>
+            ))}
           </div>
         ))}
       </div>
