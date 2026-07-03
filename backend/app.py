@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource
 from extensions import db, cors
 from flask_migrate import Migrate
@@ -74,6 +74,11 @@ class SingleExercise(Resource):
         exercise_data = {'id': e.id, 'exercisename': e.exercise_name, 'workoutid': e.workout_id, 'sets': sets}
         return(exercise_data)
 
+class CreateUser(Resource):
+    def post(self):
+        data = request.json()
+        print(data)
+
 api.add_resource(Home, "/")
 api.add_resource(Users, "/users")
 api.add_resource(SingleUser, "/user/<int:id>")
@@ -81,6 +86,7 @@ api.add_resource(Workouts, "/workouts")
 api.add_resource(SingleWorkout, "/workout/<int:id>")
 api.add_resource(Exercises, "/exercises")
 api.add_resource(SingleExercise, "/exercise/<int:id>")
+api.add_resource(CreateUser, "/createuser")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -5,7 +5,6 @@ function App(){
   const [newUsername, setNewUsername] = useState("")
   const [displayName, setDisplayName] = useState("")
   const [password, setPassword] = useState("")
-  const [userClass, setUserClass] = useState([])
   const [userID, setUserID] = useState(1)
   
   const [workoutType, setWorkoutType] = useState("Leg")
@@ -55,11 +54,7 @@ function App(){
 
   function handleCreateUser(e){
     e.preventDefault()
-    setUserClass(prev=>[...prev, {"username": newUsername, "displayname": displayName, "password": password, "userid": userID}])
-    setUserID(userID + 1)
-    setNewUsername("")
-    setDisplayName("")
-    setPassword("")
+    fetch("")
   }
 
   function handleCreateWorkout(e){
